@@ -17,42 +17,43 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class LineDrawerPanel extends JPanel implements MouseInputListener {
-    
+
     private List<GuptaSproull> list = new ArrayList<>();
     private GuptaSproull lineObj;
     private int clicks = 0;
     private int width, height;
- 
+    
+
     public LineDrawerPanel(int width, int height) {
- 
+
         setBorder(BorderFactory.createTitledBorder("Drawing Line"));
         addMouseListener(this);
         setPreferredSize(new Dimension(width, height));
         setMaximumSize(new Dimension(width, height));
         this.width = width;
-        this.height = height-100;
+        this.height = height - 100;
     }
-    
-    
-    public void editLine(int pixels) {
-        if (list.size() > 0) {
+
+    public void editLine(int pixels, Color lineColor) {
+        if (getList().size() > 0) {
             lineObj = new GuptaSproull();
             lineObj.setPixels(pixels);
-            lineObj.setP1(list.get(list.size() - 1).getP1());
-            list.remove(list.size() - 1);
+            lineObj.setLineColor(lineColor);
+            lineObj.setP1(getList().get(getList().size() - 1).getP1());
+            getList().remove(getList().size() - 1);
             clicks = 1;
         }
     }
-    
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         g.setColor(Color.white);
         g.fillRect(0, 20, width, height);
-        g.setColor(Color.BLACK);
+        //g.setColor(this.lineColor);
         GuptaSproull currentline;
-        for (int i = 0; i < list.size(); i++) {
-            currentline = (GuptaSproull) (list.get(i));
+        for (int i = 0; i < getList().size(); i++) {
+            currentline = (GuptaSproull) (getList().get(i));
             currentline.LineDraw(g);
         }
     }
@@ -102,14 +103,14 @@ public class LineDrawerPanel extends JPanel implements MouseInputListener {
     public void mousePressed(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
- 
+
         if (clicks == 0) {
             lineObj = new GuptaSproull();
             lineObj.setP1(new Point(x, y));
             clicks++;
         } else {
             lineObj.setP2(new Point(x, y));
-            list.add(lineObj);
+            getList().add(lineObj);
             clicks = 0;
         }
         repaint();
@@ -134,4 +135,21 @@ public class LineDrawerPanel extends JPanel implements MouseInputListener {
     @Override
     public void mouseMoved(MouseEvent arg0) {
     }
+
+    /**
+     * @return the list
+     */
+    public List<GuptaSproull> getList() {
+        return list;
+    }
+
+    /**
+     * @param list the list to set
+     */
+    public void setList(List<GuptaSproull> list) {
+        this.list = list;
+    }
+    
+    
+    
 }

@@ -7,6 +7,8 @@ package com.shapedrawer.draw;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -17,6 +19,7 @@ public class GuptaSproull {
      private Point p1;
     private Point p2;
     private int pixels;
+    private Color lineColor;
 
     public GuptaSproull() {
     }
@@ -43,6 +46,7 @@ public class GuptaSproull {
     }
 
     void LineDraw(Graphics g) {
+        g.setColor(lineColor != null ? lineColor : Color.BLACK);
         drawLine(g, p1.getX(), p1.getY(), p2.getX(), p2.getY(), Color.BLACK, (this.pixels > 0 ? this.pixels : 1));
     }
     
@@ -154,6 +158,31 @@ public class GuptaSproull {
      */
     public void setPixels(int pixels) {
         this.pixels = pixels;
+    }
+
+    /**
+     * @return the lineColor
+     */
+    public Color getLineColor() {
+        return lineColor;
+    }
+
+    /**
+     * @param lineColor the lineColor to set
+     */
+    public void setLineColor(Color lineColor) {
+        this.lineColor = lineColor;
+    }
+    
+    public Map<String, String> getLineProperties() {
+        return new HashMap<String, String>() {
+            {
+                put("Starting Point", "(X:" + getP1().getX() + ", Y=" + getP1().getY() + ")");
+                put("End Point", "(X:" + getP2().getX() + ", Y=" + getP2().getY() + ")");
+                put("Pixel/Thickiness", String.valueOf(pixels));
+                //put("Color", getLineColor().toString());
+            }
+        };
     }
     
 }

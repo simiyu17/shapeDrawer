@@ -5,8 +5,10 @@
  */
 package com.shapedrawer.draw;
 
+import java.awt.Color;
 import java.awt.Graphics;
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class MidPointCircleAlgorithm {
 
@@ -14,6 +16,7 @@ public class MidPointCircleAlgorithm {
     private Point p2;
     private float radius;
     private int pixels;
+    private Color circleColor;
 
     public MidPointCircleAlgorithm() {
     }
@@ -58,6 +61,7 @@ public class MidPointCircleAlgorithm {
 
     //MidPoint MidPointCircleAlgorithm Algorithm
     void CircleMidPoint(Graphics g) {
+        g.setColor(circleColor != null ? circleColor : Color.BLACK);
         int xc = center.getX();
         int yc = center.getY();
         int R = (int) radius;
@@ -66,7 +70,7 @@ public class MidPointCircleAlgorithm {
         int d = 1 - R;
         int c1 = 3, c2 = 5 - 2 * R;
         int circlePixels = this.pixels > 0 ? this.pixels : 1;
-        System.out.println("Starting At Centre ==("+xc+","+yc+"), Starting Point ==("+x+","+y+") And Pixels ="+circlePixels);
+        System.out.println("Starting At Centre ==(" + xc + "," + yc + "), Starting Point ==(" + x + "," + y + ") And Pixels =" + circlePixels);
         Draw8Points(g, circlePixels, xc, yc, x, y);
         while (x < y) {
             if (d < 0) {
@@ -79,7 +83,7 @@ public class MidPointCircleAlgorithm {
             }
             c1 += 2;
             x++;
-            System.out.println("Centre ==("+xc+","+yc+"), Drawing At  Point ==("+x+","+y+") And Pixels ="+circlePixels);
+            System.out.println("Centre ==(" + xc + "," + yc + "), Drawing At  Point ==(" + x + "," + y + ") And Pixels =" + circlePixels);
             Draw8Points(g, circlePixels, xc, yc, x, y);
         }
     }
@@ -97,7 +101,6 @@ public class MidPointCircleAlgorithm {
 
     }
 
-
     /**
      * @return the pixels
      */
@@ -110,5 +113,33 @@ public class MidPointCircleAlgorithm {
      */
     public void setPixels(int pixels) {
         this.pixels = pixels;
+    }
+
+    /**
+     * @return the circleColor
+     */
+    public Color getCircleColor() {
+        return circleColor;
+    }
+
+    /**
+     * @param circleColor the circleColor to set
+     */
+    public void setCircleColor(Color circleColor) {
+        this.circleColor = circleColor;
+    }
+
+    public Map<String, String> getCircleProperties() {
+        System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH***********************************"+center.getX());
+        Map<String, String> props = new HashMap<String, String>() {
+            {
+                put("Circle Center", "(X:" + center.getX() + ", Y=" + center.getY() + ")");
+                put("Radius", String.valueOf(radius));
+                put("Pixel/Thickiness", String.valueOf(pixels));
+               // put("Color", getCircleColor().toString());
+            }
+        };
+        
+        return props;
     }
 }

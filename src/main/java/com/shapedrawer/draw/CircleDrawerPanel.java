@@ -21,6 +21,7 @@ public class CircleDrawerPanel extends JPanel implements MouseInputListener {
     private MidPointCircleAlgorithm circleObj;
     private int clicks = 0;
     private int width, height;
+    
 
     public CircleDrawerPanel(int width, int height) {
 
@@ -30,15 +31,15 @@ public class CircleDrawerPanel extends JPanel implements MouseInputListener {
         setMaximumSize(new Dimension(width, height));
         this.width = width;
         this.height = height - 100;
-
     }
 
-    public void editCircle(int lineThickness) {
-        if (list.size() > 0) {
+    public void editCircle(int lineThickness, Color lineColor) {
+        if (getList().size() > 0) {
             circleObj = new MidPointCircleAlgorithm();
             circleObj.setPixels(lineThickness);
-            circleObj.setCenter(list.get(list.size() - 1).getCenter());
-            list.remove(list.size() - 1);
+            circleObj.setCircleColor(lineColor);
+            circleObj.setCenter(getList().get(getList().size() - 1).getCenter());
+            getList().remove(getList().size() - 1);
             clicks = 1;
         }
     }
@@ -48,10 +49,10 @@ public class CircleDrawerPanel extends JPanel implements MouseInputListener {
         super.paint(g);
         g.setColor(Color.white);
         g.fillRect(0, 20, width, height);
-        g.setColor(Color.BLACK);
+       // g.setColor(this.circleColor);
         MidPointCircleAlgorithm currentCircle;
-        for (int i = 0; i < list.size(); i++) {
-            currentCircle = (MidPointCircleAlgorithm) (list.get(i));
+        for (int i = 0; i < getList().size(); i++) {
+            currentCircle = (MidPointCircleAlgorithm) (getList().get(i));
             currentCircle.CircleMidPoint(g);
         }
     }
@@ -73,7 +74,7 @@ public class CircleDrawerPanel extends JPanel implements MouseInputListener {
         } else {
             circleObj.setP2(new Point(x, y));
             circleObj.calRadius();
-            list.add(circleObj);
+            getList().add(circleObj);
             clicks = 0;
         }
         repaint();
@@ -97,5 +98,19 @@ public class CircleDrawerPanel extends JPanel implements MouseInputListener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
+    }
+
+    /**
+     * @return the list
+     */
+    public List<MidPointCircleAlgorithm> getList() {
+        return list;
+    }
+
+    /**
+     * @param list the list to set
+     */
+    public void setList(List<MidPointCircleAlgorithm> list) {
+        this.list = list;
     }
 }
