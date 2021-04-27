@@ -217,7 +217,7 @@ public class GuptaSproull {
                 put("Starting Point", "(X:" + getP1().getX() + ", Y=" + getP1().getY() + ")");
                 put("End Point", "(X:" + getP2().getX() + ", Y=" + getP2().getY() + ")");
                 put("Pixel/Thickiness", String.valueOf(pixels>0?pixels:1));
-                //put("Color", getLineColor().toString());
+                put("Color", (getLineColor() != null ? getLineColor() : Color.BLACK).toString().replace("java.awt.Color", ""));
             }
         };
     }

@@ -130,13 +130,12 @@ public class MidPointCircleAlgorithm {
     }
 
     public Map<String, String> getCircleProperties() {
-        System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH***********************************"+center.getX());
         Map<String, String> props = new HashMap<String, String>() {
             {
                 put("Circle Center", "(X:" + center.getX() + ", Y=" + center.getY() + ")");
                 put("Radius", String.valueOf(radius));
                 put("Pixel/Thickiness", String.valueOf(pixels>0?pixels:1));
-               // put("Color", getCircleColor().toString());
+                put("Color", (getCircleColor() != null ? getCircleColor() : Color.BLACK).toString().replace("java.awt.Color", ""));
             }
         };
         
