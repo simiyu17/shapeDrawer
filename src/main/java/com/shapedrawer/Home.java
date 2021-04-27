@@ -42,7 +42,7 @@ import net.miginfocom.swing.MigLayout;
 public class Home extends JFrame {
 
     // Filter Menu Items
-    private JLabel drawLine, editLine, clearLines;
+    private JLabel drawLineDDa, drawLineGupta, editLine, clearLines;
     private JLabel drawCircle, editCircle, clearCircles;
 
     // Main Control Panels
@@ -192,16 +192,42 @@ public class Home extends JFrame {
         linesMenuPanel.setMaximumSize(new Dimension(width, height / 5));
         linesMenuPanel.setBorder(BorderFactory.createTitledBorder("Line Drawing"));
 
-        drawLine = new JLabel("Draw Line");
-        drawLine.setForeground(Color.BLUE.darker());
-        drawLine.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        drawLine.addMouseListener(new MouseAdapter() {
+        drawLineGupta = new JLabel("Draw Line (Gupta)");
+        drawLineGupta.setForeground(Color.BLUE.darker());
+        drawLineGupta.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        drawLineGupta.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
 
                 // lineDrawingPanel = new LineDrawerPanel(drawpanelWidth, drawpanelHeight);
-                line2DrawingPanel = new LineDrawerPanel(drawpanelWidth, drawpanelHeight);
+                line2DrawingPanel = new LineDrawerPanel(drawpanelWidth, drawpanelHeight, false);
+                mainPanel.removeAll();
+                mainPanel.add(line2DrawingPanel);
+                mainPanel.revalidate();
+                mainPanel.repaint();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // the mouse has entered the label
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // the mouse has exited the label
+            }
+        });
+        drawLineDDa = new JLabel("Draw Line (DDA)");
+        drawLineDDa.setForeground(Color.BLUE.darker());
+        drawLineDDa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        drawLineDDa.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                // lineDrawingPanel = new LineDrawerPanel(drawpanelWidth, drawpanelHeight);
+                line2DrawingPanel = new LineDrawerPanel(drawpanelWidth, drawpanelHeight, true);
                 mainPanel.removeAll();
                 mainPanel.add(line2DrawingPanel);
                 mainPanel.revalidate();
@@ -256,9 +282,9 @@ public class Home extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                lineDrawingPanel = new LineDrawerPanel(drawpanelWidth, drawpanelHeight);
+                //lineDrawingPanel = new LineDrawerPanel(drawpanelWidth, drawpanelHeight);
                 mainPanel.removeAll();
-                mainPanel.add(lineDrawingPanel);
+               // mainPanel.add(lineDrawingPanel);
                 mainPanel.revalidate();
                 mainPanel.repaint();
             }
@@ -274,7 +300,8 @@ public class Home extends JFrame {
             }
         });
 
-        linesMenuPanel.add(drawLine, "wrap");
+        linesMenuPanel.add(drawLineGupta, "wrap");
+        linesMenuPanel.add(drawLineDDa, "wrap");
         linesMenuPanel.add(editLine, "wrap");
         linesMenuPanel.add(clearLines, "wrap");
 

@@ -22,9 +22,10 @@ public class LineDrawerPanel extends JPanel implements MouseInputListener {
     private GuptaSproull lineObj;
     private int clicks = 0;
     private int width, height;
+    private boolean isDda;
     
 
-    public LineDrawerPanel(int width, int height) {
+    public LineDrawerPanel(int width, int height, boolean isDda) {
 
         setBorder(BorderFactory.createTitledBorder("Drawing Line"));
         addMouseListener(this);
@@ -32,6 +33,7 @@ public class LineDrawerPanel extends JPanel implements MouseInputListener {
         setMaximumSize(new Dimension(width, height));
         this.width = width;
         this.height = height - 100;
+        this.isDda = isDda;
     }
 
     public void editLine(int pixels, Color lineColor) {
@@ -40,6 +42,7 @@ public class LineDrawerPanel extends JPanel implements MouseInputListener {
             lineObj.setPixels(pixels);
             lineObj.setLineColor(lineColor);
             lineObj.setP1(getList().get(getList().size() - 1).getP1());
+            lineObj.setIsDda(getList().get(getList().size() - 1).isIsDda());
             getList().remove(getList().size() - 1);
             clicks = 1;
         }
@@ -110,6 +113,7 @@ public class LineDrawerPanel extends JPanel implements MouseInputListener {
             clicks++;
         } else {
             lineObj.setP2(new Point(x, y));
+            lineObj.setIsDda(isDda);
             getList().add(lineObj);
             clicks = 0;
         }

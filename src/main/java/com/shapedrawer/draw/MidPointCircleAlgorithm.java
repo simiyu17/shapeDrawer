@@ -135,7 +135,7 @@ public class MidPointCircleAlgorithm {
             {
                 put("Circle Center", "(X:" + center.getX() + ", Y=" + center.getY() + ")");
                 put("Radius", String.valueOf(radius));
-                put("Pixel/Thickiness", String.valueOf(pixels));
+                put("Pixel/Thickiness", String.valueOf(pixels>0?pixels:1));
                // put("Color", getCircleColor().toString());
             }
         };

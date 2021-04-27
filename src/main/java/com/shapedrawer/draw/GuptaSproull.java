@@ -20,6 +20,7 @@ public class GuptaSproull {
     private Point p2;
     private int pixels;
     private Color lineColor;
+    private boolean isDda;
 
     public GuptaSproull() {
     }
@@ -47,9 +48,15 @@ public class GuptaSproull {
 
     void LineDraw(Graphics g) {
         g.setColor(lineColor != null ? lineColor : Color.BLACK);
-        drawLine(g, p1.getX(), p1.getY(), p2.getX(), p2.getY(), Color.BLACK, (this.pixels > 0 ? this.pixels : 1));
+        if(isDda){
+            DDALineAlgo(g, (this.pixels > 0 ? this.pixels : 1), p1.getX(), p1.getY(), p2.getX(), p2.getY());
+        }else{
+            drawLine(g, p1.getX(), p1.getY(), p2.getX(), p2.getY(), Color.BLACK, (this.pixels > 0 ? this.pixels : 1));
+        }
+        
     }
     
+    // Gupta
     public static void drawLine(Graphics gc, int x1, int y1, int x2,
                                 int y2, Color color, int width) {
         // If it is just a point
@@ -145,6 +152,36 @@ public class GuptaSproull {
         //DrawingUtils.putPixel(gc, x, y, color, 1);
         gc.fillRect(x,y,1,1);
     }
+    
+     //DDA LINE ALGORITHM 
+    void DDALineAlgo(Graphics g, int pixels, int X1, int Y1, int X2, int Y2) {
+        Point p1 = new Point(X1, Y1);
+        Point p2 = new Point(X2, Y2);
+
+        double dx, dy, steps, x, y, k;
+        double xc, yc;
+       
+        dx = p2.getX() - p1.getX();
+        dy = p2.getY() - p1.getY();
+        if (Math.abs(dx) > Math.abs(dy)) {
+            steps = Math.abs(dx);
+        } else {
+            steps = Math.abs(dy);
+        }
+        xc = (dx / steps);
+        yc = (dy / steps);
+        x = p1.getX();
+        y = p1.getY();
+        System.out.println("Drawing at x="+(int)x+", y="+(int)y+" and Pixel="+pixels);
+        g.fillRect((int)x, (int)y, pixels, pixels);
+        for (k = 1; k <= steps; k++) {
+            x = x + xc;
+            y = y + yc;
+            System.out.println("Drawing at x="+(int)x+", y="+(int)y+" and Pixel="+pixels);
+            g.fillRect((int) x, (int) y, pixels, pixels);
+        }
+
+    }
 
     /**
      * @return the pixels
@@ -179,10 +216,24 @@ public class GuptaSproull {
             {
                 put("Starting Point", "(X:" + getP1().getX() + ", Y=" + getP1().getY() + ")");
                 put("End Point", "(X:" + getP2().getX() + ", Y=" + getP2().getY() + ")");
-                put("Pixel/Thickiness", String.valueOf(pixels));
+                put("Pixel/Thickiness", String.valueOf(pixels>0?pixels:1));
                 //put("Color", getLineColor().toString());
             }
         };
+    }
+
+    /**
+     * @return the isDda
+     */
+    public boolean isIsDda() {
+        return isDda;
+    }
+
+    /**
+     * @param isDda the isDda to set
+     */
+    public void setIsDda(boolean isDda) {
+        this.isDda = isDda;
     }
     
 }
