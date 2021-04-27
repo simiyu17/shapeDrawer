@@ -7,10 +7,7 @@ package com.shapedrawer;
 
 import javax.swing.SwingUtilities;
 
-/**
- *
- * @author simiyu
- */
+
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

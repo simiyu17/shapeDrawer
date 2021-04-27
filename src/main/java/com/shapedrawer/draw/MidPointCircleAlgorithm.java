@@ -5,25 +5,20 @@
  */
 package com.shapedrawer.draw;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 
-/**
- *
- * @author simiyu
- */
-public class Circle {
+
+public class MidPointCircleAlgorithm {
 
     private Point center;
     private Point p2;
     private float radius;
-    private float lineThickness;
+    private int pixels;
 
-    public Circle() {
+    public MidPointCircleAlgorithm() {
     }
 
-    public Circle(Point center, Point p2) {
+    public MidPointCircleAlgorithm(Point center, Point p2) {
         this.center = center;
         this.p2 = p2;
         radius = (float) Math.sqrt((double) ((center.getX()
@@ -61,7 +56,8 @@ public class Circle {
         return radius;
     }
 
-    void CircleMidPoint(Graphics2D g) {
+    //MidPoint MidPointCircleAlgorithm Algorithm
+    void CircleMidPoint(Graphics g) {
         int xc = center.getX();
         int yc = center.getY();
         int R = (int) radius;
@@ -69,7 +65,9 @@ public class Circle {
         int x = 0, y = R;
         int d = 1 - R;
         int c1 = 3, c2 = 5 - 2 * R;
-        Draw8Points(g, this.lineThickness, xc, yc, x, y);
+        int circlePixels = this.pixels > 0 ? this.pixels : 1;
+        System.out.println("Starting At Centre ==("+xc+","+yc+"), Starting Point ==("+x+","+y+") And Pixels ="+circlePixels);
+        Draw8Points(g, circlePixels, xc, yc, x, y);
         while (x < y) {
             if (d < 0) {
                 d += c1;
@@ -81,37 +79,36 @@ public class Circle {
             }
             c1 += 2;
             x++;
-            Draw8Points(g, this.lineThickness, xc, yc, x, y);
+            System.out.println("Centre ==("+xc+","+yc+"), Drawing At  Point ==("+x+","+y+") And Pixels ="+circlePixels);
+            Draw8Points(g, circlePixels, xc, yc, x, y);
         }
     }
 
-    void Draw8Points(Graphics2D g, float lineThickiness, int xc, int yc, int a, int b) {
-        if(lineThickiness > 0.0f){
-            g.setStroke(new BasicStroke(lineThickiness));
-        }
-        g.drawOval(xc + a, yc + b, 1, 1);
-        g.drawOval(xc - a, yc + b, 1, 1);
-        g.drawOval(xc - a, yc - b, 1, 1);
-        g.drawOval(xc + a, yc - b, 1, 1);
+    void Draw8Points(Graphics g, int lineThickiness, int xc, int yc, int a, int b) {
+        g.fillRect(xc + a, yc + b, lineThickiness, lineThickiness);
+        g.fillRect(xc - a, yc + b, lineThickiness, lineThickiness);
+        g.fillRect(xc - a, yc - b, lineThickiness, lineThickiness);
+        g.fillRect(xc + a, yc - b, lineThickiness, lineThickiness);
 
-        g.drawOval(xc + b, yc + a, 1, 1);
-        g.drawOval(xc - b, yc + a, 1, 1);
-        g.drawOval(xc - b, yc - a, 1, 1);
-        g.drawOval(xc + b, yc - a, 1, 1);
+        g.fillRect(xc + b, yc + a, lineThickiness, lineThickiness);
+        g.fillRect(xc - b, yc + a, lineThickiness, lineThickiness);
+        g.fillRect(xc - b, yc - a, lineThickiness, lineThickiness);
+        g.fillRect(xc + b, yc - a, lineThickiness, lineThickiness);
 
     }
 
+
     /**
-     * @return the lineThickness
+     * @return the pixels
      */
-    public float getLineThickness() {
-        return lineThickness;
+    public int getPixels() {
+        return pixels;
     }
 
     /**
-     * @param lineThickness the lineThickness to set
+     * @param pixels the pixels to set
      */
-    public void setLineThickness(float lineThickness) {
-        this.lineThickness = lineThickness;
+    public void setPixels(int pixels) {
+        this.pixels = pixels;
     }
 }

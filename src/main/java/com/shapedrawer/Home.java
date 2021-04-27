@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 
 public class Home extends JFrame {
@@ -29,9 +30,10 @@ public class Home extends JFrame {
     private JLabel drawCircle, editCircle, clearCircles;
 
     // Main Control Panels
-    private JPanel drawingPanel, mainPanel;
+    private JPanel mainPanel;
     private CircleDrawerPanel circleDrawingPanel;
     private LineDrawerPanel lineDrawingPanel;
+    private LineDrawerPanel line2DrawingPanel;
 
     // Panels inside Controls panel
     private JPanel drawingControlsPanel;
@@ -93,7 +95,8 @@ public class Home extends JFrame {
         drawingControlsPanel.setMaximumSize(new Dimension(width / 7, height));
         drawingControlsPanel.setBorder(BorderFactory.createTitledBorder("Adjustment Controls"));
 
-        lineThicknessLabel = new JLabel("Enter Drawing Line Width (If editing)");
+        //lineThicknessLabel = new JLabel("Enter Line Pixel \n(Enter Before Clicking Edit)");
+        lineThicknessLabel = new JLabel("<html>Enter Drawing Line Pixel<br/>(Enter Before Clicking Edit)</html>", SwingConstants.CENTER);
         lineThicknesstext = new JTextField(18);
         drawingControlsPanel.add(lineThicknessLabel, "wrap");
         drawingControlsPanel.add(lineThicknesstext, "wrap");
@@ -111,8 +114,8 @@ public class Home extends JFrame {
 
         //Lines Menu Panel
         JPanel linesMenuPanel = new JPanel(new MigLayout());
-        linesMenuPanel.setPreferredSize(new Dimension(width, height/5));
-        linesMenuPanel.setMaximumSize(new Dimension(width, height/5));
+        linesMenuPanel.setPreferredSize(new Dimension(width, height / 5));
+        linesMenuPanel.setMaximumSize(new Dimension(width, height / 5));
         linesMenuPanel.setBorder(BorderFactory.createTitledBorder("Line Drawing"));
 
         drawLine = new JLabel("Draw Line");
@@ -123,9 +126,10 @@ public class Home extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                lineDrawingPanel = new LineDrawerPanel(drawpanelWidth, drawpanelHeight);
+                // lineDrawingPanel = new LineDrawerPanel(drawpanelWidth, drawpanelHeight);
+                line2DrawingPanel = new LineDrawerPanel(drawpanelWidth, drawpanelHeight);
                 mainPanel.removeAll();
-                mainPanel.add(lineDrawingPanel);
+                mainPanel.add(line2DrawingPanel);
                 mainPanel.revalidate();
                 mainPanel.repaint();
             }
@@ -147,13 +151,13 @@ public class Home extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                float linewidth = 0.0f;
+                int linewidth = 1;
                 try {
-                    linewidth = Float.parseFloat(lineThicknesstext.getText());
+                    linewidth = Integer.parseInt(lineThicknesstext.getText());
                 } catch (Exception ex) {
                 }
-                if (lineDrawingPanel != null) {
-                    lineDrawingPanel.editLine(linewidth);
+                if (line2DrawingPanel != null) {
+                    line2DrawingPanel.editLine(linewidth);
                 } else {
                     JOptionPane.showMessageDialog(null, "There\'s no line to edit !!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -169,7 +173,7 @@ public class Home extends JFrame {
                 // the mouse has exited the label
             }
         });
-        
+
         clearLines = new JLabel("Delete Lines");
         clearLines.setForeground(Color.BLUE.darker());
         clearLines.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -202,8 +206,8 @@ public class Home extends JFrame {
 
         //Circle Menu Panel
         JPanel circleMenuPanel = new JPanel(new MigLayout());
-        circleMenuPanel.setPreferredSize(new Dimension(width, height/5));
-        circleMenuPanel.setMaximumSize(new Dimension(width, height/5));
+        circleMenuPanel.setPreferredSize(new Dimension(width, height / 5));
+        circleMenuPanel.setMaximumSize(new Dimension(width, height / 5));
         circleMenuPanel.setBorder(BorderFactory.createTitledBorder("Circle Drawing"));
 
         drawCircle = new JLabel("Draw Circle");
@@ -237,9 +241,9 @@ public class Home extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                float linewidth = 0.0f;
+                int linewidth = 0;
                 try {
-                    linewidth = Float.parseFloat(lineThicknesstext.getText());
+                    linewidth = Integer.parseInt(lineThicknesstext.getText());
                 } catch (Exception ex) {
                 }
                 if (circleDrawingPanel != null) {
@@ -259,7 +263,7 @@ public class Home extends JFrame {
                 // the mouse has exited the label
             }
         });
-        
+
         clearCircles = new JLabel("Delete Circles");
         clearCircles.setForeground(Color.BLUE.darker());
         clearCircles.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

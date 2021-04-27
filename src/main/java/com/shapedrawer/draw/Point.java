@@ -5,10 +5,6 @@
  */
 package com.shapedrawer.draw;
 
-/**
- *
- * @author simiyu
- */
 public class Point {
 
     private int x;

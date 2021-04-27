@@ -8,7 +8,6 @@ package com.shapedrawer.draw;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +15,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
-/**
- *
- * @author simiyu
- */
 public class CircleDrawerPanel extends JPanel implements MouseInputListener {
 
-    //private Point p1 = new Point();
-    //private Point p2 = new Point();
-    private List<Circle> list = new ArrayList();
-    private Circle circleObj;
+    private List<MidPointCircleAlgorithm> list = new ArrayList();
+    private MidPointCircleAlgorithm circleObj;
     private int clicks = 0;
     private int width, height;
 
@@ -40,10 +33,10 @@ public class CircleDrawerPanel extends JPanel implements MouseInputListener {
 
     }
 
-    public void editCircle(float lineThickness) {
+    public void editCircle(int lineThickness) {
         if (list.size() > 0) {
-            circleObj = new Circle();
-            circleObj.setLineThickness(lineThickness);
+            circleObj = new MidPointCircleAlgorithm();
+            circleObj.setPixels(lineThickness);
             circleObj.setCenter(list.get(list.size() - 1).getCenter());
             list.remove(list.size() - 1);
             clicks = 1;
@@ -53,14 +46,13 @@ public class CircleDrawerPanel extends JPanel implements MouseInputListener {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.white);
-        g2.fillRect(0, 20, width, height);
-        g2.setColor(Color.BLACK);
-        Circle currentCircle;
+        g.setColor(Color.white);
+        g.fillRect(0, 20, width, height);
+        g.setColor(Color.BLACK);
+        MidPointCircleAlgorithm currentCircle;
         for (int i = 0; i < list.size(); i++) {
-            currentCircle = (Circle) (list.get(i));
-            currentCircle.CircleMidPoint(g2);
+            currentCircle = (MidPointCircleAlgorithm) (list.get(i));
+            currentCircle.CircleMidPoint(g);
         }
     }
 
@@ -74,7 +66,7 @@ public class CircleDrawerPanel extends JPanel implements MouseInputListener {
         int y = e.getY();
 
         if (clicks == 0) {
-            circleObj = new Circle();
+            circleObj = new MidPointCircleAlgorithm();
             circleObj.setCenter(new Point(x, y));
 
             clicks++;
