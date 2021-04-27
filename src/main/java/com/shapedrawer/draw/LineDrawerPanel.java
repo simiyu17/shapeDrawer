@@ -18,8 +18,8 @@ import java.awt.Graphics;
 
 public class LineDrawerPanel extends JPanel implements MouseInputListener {
     
-    private List<DDALineAlgorithm> list = new ArrayList<>();
-    private DDALineAlgorithm lineObj;
+    private List<GuptaSproull> list = new ArrayList<>();
+    private GuptaSproull lineObj;
     private int clicks = 0;
     private int width, height;
  
@@ -36,7 +36,7 @@ public class LineDrawerPanel extends JPanel implements MouseInputListener {
     
     public void editLine(int pixels) {
         if (list.size() > 0) {
-            lineObj = new DDALineAlgorithm();
+            lineObj = new GuptaSproull();
             lineObj.setPixels(pixels);
             lineObj.setP1(list.get(list.size() - 1).getP1());
             list.remove(list.size() - 1);
@@ -50,9 +50,9 @@ public class LineDrawerPanel extends JPanel implements MouseInputListener {
         g.setColor(Color.white);
         g.fillRect(0, 20, width, height);
         g.setColor(Color.BLACK);
-        DDALineAlgorithm currentline;
+        GuptaSproull currentline;
         for (int i = 0; i < list.size(); i++) {
-            currentline = (DDALineAlgorithm) (list.get(i));
+            currentline = (GuptaSproull) (list.get(i));
             currentline.LineDraw(g);
         }
     }
@@ -94,12 +94,6 @@ public class LineDrawerPanel extends JPanel implements MouseInputListener {
         }
     }
 
-// Driver code
-    public static void main(String[] args) {
-        int X1 = 2, Y1 = 2, X2 = 8, Y2 = 5;
-        midPoint(X1, Y1, X2, Y2);
-    }
-
     @Override
     public void mouseClicked(MouseEvent arg0) {
     }
@@ -110,7 +104,7 @@ public class LineDrawerPanel extends JPanel implements MouseInputListener {
         int y = e.getY();
  
         if (clicks == 0) {
-            lineObj = new DDALineAlgorithm();
+            lineObj = new GuptaSproull();
             lineObj.setP1(new Point(x, y));
             clicks++;
         } else {
